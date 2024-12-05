@@ -7,10 +7,10 @@ beforeAll((done) => {
     const testPort = process.env.TEST_PORT || 3001;
     server = app.listen(testPort, () => {
         global.agent = request.agent(server);
-        console.log(`Test server started on port ${TEST_PORT}`);
+        console.log(`Test server started on port ${testPort}`);
         done();
     });
-});
+}, 10000);
 
 afterAll((done) => {
     if (server) {
