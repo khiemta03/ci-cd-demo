@@ -43,7 +43,7 @@ describe('User API endpoints', () => {
                 .expect(200);
 
             expect(res.body).toHaveProperty('id', 1);
-            expect(res.body).toHaveProperty('name', 'Ali');
+            expect(res.body).toHaveProperty('name', 'Alice');
         });
 
         it('should return 404 when user is not found', async () => {
