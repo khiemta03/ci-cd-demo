@@ -1,0 +1,33 @@
+const express = require('express');
+const app = express();
+
+// Mock data
+const users = [
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' },
+    { id: 3, name: 'Charlie' }
+];
+
+// Route to get all users
+app.get('/users', (req, res) => {
+    res.json(users);
+});
+
+// Route to get a specific user by ID
+app.get('/users/:id', (req, res) => {
+    const userId = parseInt(req.params.id, 10);
+    const user = users.find(u => u.id === userId);
+    if (user) {
+        res.json(user);
+    } else {
+        res.status(404).send('User not found');
+    }
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
+module.exports = app;
