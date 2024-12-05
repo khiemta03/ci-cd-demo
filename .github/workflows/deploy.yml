@@ -4,9 +4,11 @@
 name: Deploy to AWS ECR
 
 on:
-  push:
-    branches: [ "master" ]
-
+  workflow_run:
+    workflows: ["Build and Run Tests"]
+    types:
+      - completed
+    branches: ["master"]
 
 jobs:
 
