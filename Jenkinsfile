@@ -11,6 +11,26 @@ pipeline {
                 ])
             }
         }
+
+        stage('Build & Test') {
+            parallel {
+                stage('Install Dependencies') {
+                    steps {
+                        sh 'npm install'
+                    }
+                }
+                stage('Build') {
+                    steps {
+                        sh 'npm run build --if-present'
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        sh 'npm test'
+                    }
+                }
+            }
+        }
     }
 
     post {
