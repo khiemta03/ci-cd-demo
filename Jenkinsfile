@@ -13,9 +13,8 @@ pipeline {
         }
 
         stage('Build & Test') {
-            parallel {
-                stage('Install Dependencies') {
-                    steps {
+            stage('Install Dependencies') {
+                steps {
                         sh 'npm install'
                     }
                 }
@@ -27,7 +26,6 @@ pipeline {
                 stage('Test') {
                     steps {
                         sh 'npm test'
-                    }
                 }
             }
         }
