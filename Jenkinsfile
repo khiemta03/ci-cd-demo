@@ -13,13 +13,25 @@ pipeline {
         CONTAINER_NAME = 'UserAPI'
         AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
-        ECR_REGISTRY = "149536464852.dkr.ecr.${AWS_REGION}.amazonaws.com"
     }
 
     stages {
+        stage('Initialize') {
+            steps {
+                script {
+                    // Dynamically set ECR_REGISTRY
+                    env.ECR_REGISTRY = "149536464852.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
+                }
+            }
+        }
+
         stage('Checkout Code') {
             steps {
-                checkout scmGit(branches: [[name: '*/jenkins']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/khiemta03/ci-cd-demo']])
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/jenkins']],
+                    userRemoteConfigs: [[url: 'https://github.com/khiemta03/ci-cd-demo']]
+                ])
             }
         }
 
