@@ -61,3 +61,4 @@ jobs:
         service: UserAPIs
         cluster: AdvancedWeb
         wait-for-service-stability: true
+        enable-ecs-managed-tags: true
