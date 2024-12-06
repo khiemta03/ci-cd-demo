@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-            checkout([
+                checkout([
                     $class: 'GitSCM',
                     branches: [[name: '*/jenkins']],
                     userRemoteConfigs: [[url: 'https://github.com/khiemta03/ci-cd-demo']]
@@ -12,21 +12,11 @@ pipeline {
             }
         }
 
-        stage('Build & Test') {
-            stage('Install Dependencies') {
-                steps {
-                        sh 'npm install'
-                    }
-                }
-                stage('Build') {
-                    steps {
-                        sh 'npm run build --if-present'
-                    }
-                }
-                stage('Test') {
-                    steps {
-                        sh 'npm test'
-                }
+        stage('Build and Test') {
+            steps {
+                sh 'npm install'
+                sh 'npm run build --if-present'
+                sh 'npm test'
             }
         }
     }
