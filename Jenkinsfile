@@ -19,7 +19,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                checkout scm
+                checkout scmGit(branches: [[name: '*/jenkins']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/khiemta03/ci-cd-demo']])
             }
         }
 
