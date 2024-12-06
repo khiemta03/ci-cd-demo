@@ -1,8 +1,9 @@
 pipeline {
     agent any
 
-    stage('Checkout Code') {
-        steps {
+    stages {
+        stage('Checkout Code') {
+            steps {
             checkout([
                     $class: 'GitSCM',
                     branches: [[name: '*/jenkins']],
@@ -10,6 +11,7 @@ pipeline {
                 ])
             }
         }
+    }
 
     post {
         always {
