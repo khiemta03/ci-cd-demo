@@ -60,5 +60,5 @@ jobs:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: UserAPIs
         cluster: AdvancedWeb
-        wait-for-service-stability: true
+        wait-for-service-stability: false
         enable-ecs-managed-tags: true
