@@ -22,10 +22,9 @@ pipeline {
                 script {
                     echo 'Installing AWS CLI'
                     sh '''
-                        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-                        unzip awscliv2.zip
-                        ./aws/install --install-dir $HOME/aws-cli --bin-dir $HOME/bin
-                        export PATH=$HOME/bin:$PATH
+                        curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+                        installer -pkg AWSCLIV2.pkg -target /
+                        export PATH=/usr/local/aws-cli/aws:$PATH
                     '''
 
                     echo 'Installing Docker'
