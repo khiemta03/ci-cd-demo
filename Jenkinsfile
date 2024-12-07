@@ -6,7 +6,6 @@ pipeline {
     }
 
     environment {
-        PATH+EXTRA = "/usr/local/bin"
         AWS_REGION = 'ap-southeast-2'
         ECR_REPOSITORY = 'advanced_web'
         ECS_CLUSTER = 'AdvancedWeb'
@@ -15,6 +14,14 @@ pipeline {
         AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
         ECR_REGISTRY = "149536464852.dkr.ecr.${AWS_REGION}.amazonaws.com"
+    }
+
+    node {
+        stage('Set PATH') {
+            withEnv(["PATH=/usr/local/bin:$PATH"]) {
+                sh 'echo $PATH'
+            }
+        }
     }
 
     stages {
