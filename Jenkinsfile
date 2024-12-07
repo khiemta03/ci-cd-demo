@@ -30,9 +30,10 @@ pipeline {
 
                     echo 'Installing Docker'
                     sh '''
-                        apt-get update
-                        apt-get install -y docker.io
-                        systemctl start docker
+                        # Install Docker using the convenience script
+                        curl -fsSL https://get.docker.com -o get-docker.sh
+                        sh get-docker.sh
+                        # Add jenkins user to docker group
                         usermod -aG docker jenkins
                     '''
                 }
