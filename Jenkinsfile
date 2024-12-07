@@ -17,39 +17,6 @@ pipeline {
     }
 
     stages {
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    echo 'Installing AWS CLI'
-                    sh '''
-                        # Check if Homebrew is installed, install if not
-                        which brew || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-                        
-                        # Install AWS CLI using Homebrew
-                        brew install awscli
-                        
-                        # Verify installation
-                        aws --version
-                    '''
-
-                    echo 'Installing Docker'
-                    sh '''
-                        # Install Docker using Homebrew
-                        brew install --cask docker
-                        
-                        # Start Docker
-                        open -a Docker
-                        
-                        # Wait for Docker to start
-                        while ! docker system info > /dev/null 2>&1; do
-                            echo "Waiting for Docker to start..."
-                            sleep 5
-                        done
-                    '''
-                }
-            }   
-        }
-
         stage('Checkout Code') {
             steps {
                 checkout scm
