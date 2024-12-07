@@ -6,7 +6,6 @@ pipeline {
         }
     }
 
-
     tools {
         nodejs 'NodeJS'
     }
@@ -21,6 +20,28 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
         ECR_REGISTRY = "149536464852.dkr.ecr.${AWS_REGION}.amazonaws.com"
     }
+
+     stages {
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    echo 'Installing AWS CLI'
+                    sh '''
+                        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                        unzip awscliv2.zip
+                        sudo ./aws/install
+                    '''
+
+                    echo 'Installing Docker'
+                    sh '''
+                        sudo apt-get update
+                        sudo apt-get install -y docker.io
+                        sudo systemctl start docker
+                        sudo usermod -aG docker jenkins
+                    '''
+                }
+            }
+        }
 
     stages {
         stage('Checkout Code') {
