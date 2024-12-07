@@ -16,15 +16,13 @@ pipeline {
         ECR_REGISTRY = "149536464852.dkr.ecr.${AWS_REGION}.amazonaws.com"
     }
 
-    node {
-        stage('Set PATH') {
+    stages {
+         stage('Set PATH') {
             withEnv(["PATH=/usr/local/bin:$PATH"]) {
                 sh 'echo $PATH'
             }
         }
-    }
 
-    stages {
         stage('Checkout Code') {
             steps {
                 checkout scm
