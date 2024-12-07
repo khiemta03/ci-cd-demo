@@ -4,19 +4,17 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/jenkins']],
-                    userRemoteConfigs: [[url: 'https://github.com/khiemta03/ci-cd-demo']]
-                ])
+                checkout scm
             }
         }
 
-        stage('Build and Test') {
-            steps {
-                sh 'npm install'
-                sh 'npm run build --if-present'
-                sh 'npm test'
+        stage('Build & Test') {
+            parallel {
+                steps {
+                    sh 'npm ci'
+                    sh 'npm run build --if-present'
+                    sh 'npm test'
+                }
             }
         }
     }
