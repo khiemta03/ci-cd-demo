@@ -17,9 +17,12 @@ pipeline {
     }
 
     stages {
-         stage('Set PATH') {
-            withEnv(["PATH=/usr/local/bin:$PATH"]) {
-                sh 'echo $PATH'
+        stage('Set PATH') {
+            steps {
+                script {
+                    env.PATH = "/usr/local/bin:${env.PATH}"
+                    sh 'echo $PATH'
+                }
             }
         }
 
