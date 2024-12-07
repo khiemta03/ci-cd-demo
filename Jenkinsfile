@@ -1,11 +1,8 @@
 pipeline {
-    agent {
-        label 'ubuntu'
-    }
+    agent any
 
     tools {
         nodejs 'NodeJS'
-        // docker 'Docker'
     }
 
     environment {
@@ -20,21 +17,28 @@ pipeline {
     }
 
     stages {
-        stage ('Install dependencies'){
-            steps{
-                script{    sh '''
-                            apt-get update
-                            apt-get install -y docker.io unzip curl
-                            rm -rf awscliv2.zip aws/
-                            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-                            unzip -o awscliv2.zip
-                            ./aws/install
-                        '''
-                    
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    echo 'Installing AWS CLI'
+                    sh '''
+                        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                        unzip awscliv2.zip
+                        ./aws/install --install-dir $HOME/aws-cli --bin-dir $HOME/bin
+                        export PATH=$HOME/bin:$PATH
+                    '''
+
+                    echo 'Installing Docker'
+                    sh '''
+                        apt-get update
+                        apt-get install -y docker.io
+                        systemctl start docker
+                        usermod -aG docker jenkins
+                    '''
                 }
-            }
+            }   
         }
-        
+
         stage('Checkout Code') {
             steps {
                 checkout scm
