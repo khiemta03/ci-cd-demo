@@ -9,12 +9,10 @@ pipeline {
         }
 
         stage('Build & Test') {
-            parallel {
-                steps {
-                    sh 'npm ci'
-                    sh 'npm run build --if-present'
-                    sh 'npm test'
-                }
+            steps {
+                sh 'npm ci'
+                sh 'npm run build --if-present'
+                sh 'npm test'
             }
         }
     }
