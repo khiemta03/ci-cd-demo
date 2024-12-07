@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS 22.x'
+        nodejs 'NodeJS'
     }
 
     environment {
@@ -24,9 +24,6 @@ pipeline {
         }
 
         stage('Build & Test') {
-            tools {
-                nodejs 'NodeJS'
-            }
 
             parallel {
                 stage('Install Dependencies') {
