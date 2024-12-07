@@ -1,5 +1,11 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'cimg/aws:2024.01'
+            args '-u root --privileged'
+        }
+    }
+
 
     tools {
         nodejs 'NodeJS'
