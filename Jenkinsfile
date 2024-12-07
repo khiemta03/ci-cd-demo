@@ -9,6 +9,10 @@ pipeline {
         }
 
         stage('Build & Test') {
+            tools {
+                nodejs 'NodeJS'
+            }
+
             steps {
                 sh 'npm ci'
                 sh 'npm run build --if-present'
