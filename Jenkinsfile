@@ -59,37 +59,14 @@ pipeline {
                 stage('Build & Push Docker Image') {
                     steps {
                         script {
-                            def imageTag = "${env.BUILD_NUMBER ?: 'latest'}"
+                            def imageTag = "${GIT_COMMIT}"
                             sh """
-                                docker build -t ${ECR_REPOSITORY}:${imageTag} .
-                                docker tag ${ECR_REPOSITORY}:${imageTag} ${ECR_REGISTRY}/${ECR_REPOSITORY}:${imageTag}
+                                docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${imageTag} .
                                 docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:${imageTag}
                             """
                         }
                     }
                 }
-
-        //         stage('Update ECS Service') {
-        //             steps {
-        //                 script {
-        //                     // Fetch current task definition
-        //                     sh """
-        //                         aws ecs describe-task-definition --task-definition ${ECS_SERVICE} --query taskDefinition > task-definition.json
-        //                     """
-
-        //                     // Modify the task definition with the new image
-        //                     def taskDef = readJSON file: 'task-definition.json'
-        //                     taskDef.containerDefinitions.find { it.name == CONTAINER_NAME }.image = "${ECR_REGISTRY}/${ECR_REPOSITORY}:${env.BUILD_NUMBER}"
-        //                     writeJSON file: 'new-task-definition.json', json: taskDef
-
-        //                     // Register new task definition and update ECS service
-        //                     sh """
-        //                         NEW_TASK_DEF=$(aws ecs register-task-definition --cli-input-json file://new-task-definition.json --query 'taskDefinition.taskDefinitionArn' --output text)
-        //                         aws ecs update-service --cluster ${ECS_CLUSTER} --service ${ECS_SERVICE} --task-definition $NEW_TASK_DEF --force-new-deployment
-        //                     """
-        //                 }
-        //             }
-        //         }
             }
         }
     }
