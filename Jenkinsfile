@@ -24,15 +24,15 @@ pipeline {
                     sh '''
                         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
                         unzip awscliv2.zip
-                        sudo ./aws/install
+                        sudo -S ./aws/install
                     '''
 
                     echo 'Installing Docker'
                     sh '''
-                        sudo apt-get update
-                        sudo apt-get install -y docker.io
-                        sudo systemctl start docker
-                        sudo usermod -aG docker jenkins
+                        sudo -S apt-get update
+                        sudo -S apt-get install -y docker.io
+                        sudo -S systemctl start docker
+                        sudo -S usermod -aG docker jenkins
                     '''
                 }
             }   
