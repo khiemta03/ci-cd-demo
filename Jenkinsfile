@@ -6,6 +6,7 @@ pipeline {
     }
 
     environment {
+        PATH+EXTRA = "/usr/local/bin"
         AWS_REGION = 'ap-southeast-2'
         ECR_REPOSITORY = 'advanced_web'
         ECS_CLUSTER = 'AdvancedWeb'
