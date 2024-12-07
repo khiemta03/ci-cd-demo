@@ -25,22 +25,13 @@ pipeline {
 
         stage('Build & Test') {
 
-            parallel {
-                stage('Install Dependencies') {
-                    steps {
-                        sh 'npm ci'
-                    }
-                }
-                stage('Build') {
-                    steps {
-                        sh 'npm run build --if-present'
-                    }
-                }
-                stage('Test') {
-                    steps {
-                        sh 'npm test'
-                    }
-                }
+            steps {
+                echo 'Installing dependencies'
+                sh 'npm ci'
+                echo 'Building'
+                sh 'npm run build --if-present'
+                echo 'Testing'
+                sh 'npm test'
             }
         }
 
