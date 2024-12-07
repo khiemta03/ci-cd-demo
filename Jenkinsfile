@@ -21,7 +21,7 @@ pipeline {
         ECR_REGISTRY = "149536464852.dkr.ecr.${AWS_REGION}.amazonaws.com"
     }
 
-     stages {
+    stages {
         stage('Install Dependencies') {
             steps {
                 script {
@@ -40,10 +40,9 @@ pipeline {
                         sudo usermod -aG docker jenkins
                     '''
                 }
-            }
+            }   
         }
 
-    stages {
         stage('Checkout Code') {
             steps {
                 checkout scm
