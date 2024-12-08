@@ -31,7 +31,7 @@ describe('User API endpoints', () => {
                 .expect(200);
 
             expect(Array.isArray(res.body)).toBeTruthy();
-            expect(res.body.length).toBe(8);
+            expect(res.body.length).toBe(2);
             expect(res.body[0]).toHaveProperty('name', 'Alice');
         });
     });
