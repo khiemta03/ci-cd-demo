@@ -9,7 +9,8 @@ const users = [
     { id: 5, name: 'Eve' },
     { id: 6, name: 'Frank' },
     { id: 7, name: 'Gavin' },
-    { id: 8, name: 'Harry' }
+    { id: 8, name: 'Harry' },
+    { id: 9, name: 'Ian' }
 ];
 
 app.get('/users', (req, res) => {
